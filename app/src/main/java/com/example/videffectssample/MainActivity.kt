@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.videffectssample.databinding.ActivityMainBinding
 import com.sherazkhilji.videffects.BlackAndWhiteEffect
 import com.sherazkhilji.videffects.DuotoneEffect
-import com.sherazkhilji.videffects.GrainEffect
-import com.sherazkhilji.videffects.filter.AutoFixFilter
+import com.sherazkhilji.videffects.filter.GrainFilter
+import com.sherazkhilji.videffects.filter.NoEffectFilter
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,15 +33,17 @@ class MainActivity : AppCompatActivity() {
             Log.e(TAG, e.message, e)
         }
 
-        binding.mVideoSurfaceView.init(mMediaPlayer, AutoFixFilter())
+        binding.mVideoSurfaceView.init(mMediaPlayer, NoEffectFilter())
 
         //Black and White Effect
         binding.bwButton.setOnClickListener {
             binding.mVideoSurfaceView.shader = BlackAndWhiteEffect()
         }
-        //Grain Effect
+        //Grain Filter
         binding.grainButton.setOnClickListener {
-            binding.mVideoSurfaceView.shader = GrainEffect(0.50f)
+            val grainFilter = GrainFilter(10, 10)
+            grainFilter.setIntensity(0.5f)
+            binding.mVideoSurfaceView.filter = grainFilter
         }
         //Duotone Effect
         binding.duotoneButton.setOnClickListener {
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
         //Reset with AutoFixFilter
         binding.resetButton.setOnClickListener {
-            binding.mVideoSurfaceView.filter = AutoFixFilter()
+            binding.mVideoSurfaceView.filter = NoEffectFilter()
         }
 
     }
